@@ -1,6 +1,6 @@
 <template>
   <div class="video-page-manager">
-    <div>
+    <div v-if="mostPopular">
       <div class="video-grid-subheader video-shelf">
         <h2 class="video-title-container">{{video_title}}</h2>
       </div>

@@ -64,6 +64,9 @@ export default {
     width: 100%;
   }
   @media only screen and (max-width: 600px) {
+    .video-loading-desktop{
+      display: none;
+    }
     .video-grid-subheader {
       padding: 12px 0;
       background: #212121;
@@ -97,6 +100,9 @@ export default {
     }
   }
   @media only screen and (min-width: 600px) {
+    .video-loading-mobile {
+      display: none;
+    }
     .video-shelf {
       padding-top: 24px;
     }
