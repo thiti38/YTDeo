@@ -1,0 +1,24 @@
+{
+  "name": "YTDeo",
+  "version": "1.0.0",
+  "description": "Enjoy the videos and music without in-stream ads, on YTDeo.",
+  "author": "thiti38",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.5.4",
+    "@nuxtjs/component-cache": "^1.1.5",
+    "@nuxtjs/moment": "^1.2.0",
+    "nuxt": "^2.0.0",
+    "vue-moment": "^4.0.0"
+  },
+  "devDependencies": {
+    "google-search-autocomplete": "github:sotayamashita/google-search-autocomplete",
+    "nodemon": "^1.18.9"
+  }
+}
