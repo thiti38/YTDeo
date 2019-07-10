@@ -2,13 +2,13 @@
   <div id="app">
     <div id="content" class="video-app">
       <masthead/>
-      <div v-if="getLocation" id="page-manager" class="video-app">
-        <most-popular-all :location="getLocation" />
-        <most-popular :location="getLocation" videoCategoryId="10" video_title="Music" />
-        <most-popular :location="getLocation" videoCategoryId="1" video_title="Film & Animation" />
-        <most-popular :location="getLocation" videoCategoryId="17" video_title="Sports" />
-        <most-popular :location="getLocation" videoCategoryId="20" video_title="Gaming" />
-        <most-popular :location="getLocation" videoCategoryId="24" video_title="Entertainment" />
+      <div v-if="$store.getters.getLocation" id="page-manager" class="video-app">
+        <most-popular-all :location="$store.getters.getLocation" />
+        <most-popular :location="$store.getters.getLocation" videoCategoryId="10" video_title="Music" />
+        <most-popular :location="$store.getters.getLocation" videoCategoryId="1" video_title="Film & Animation" />
+        <most-popular :location="$store.getters.getLocation" videoCategoryId="17" video_title="Sports" />
+        <most-popular :location="$store.getters.getLocation" videoCategoryId="20" video_title="Gaming" />
+        <most-popular :location="$store.getters.getLocation" videoCategoryId="24" video_title="Entertainment" />
       </div>
     </div>
   </div>
@@ -18,21 +18,12 @@
 import Masthead from '~/components/Masthead.vue'
 import MostPopularAll from '~/components/MostPopularAll.vue'
 import MostPopular from '~/components/MostPopular.vue'
-import { mapGetters } from 'vuex'
 
 export default {
   components: {
     Masthead,
     MostPopularAll,
     MostPopular
-  },
-  data() {
-    return {
-      api_url: "http://34.67.204.12/",
-    }
-  },
-  beforeCreate() {
-    this.$store.dispatch('GET_LOCATION')
   },
   /*async asyncData({$axios}){
     let [resData] = await Promise.all([
@@ -42,11 +33,20 @@ export default {
     suggest = JSON.stringify(JSON.parse(suggest[1].substr(0, suggest[1].length-1))[1]);
     console.log(suggest);
   },*/
-  computed: {
-    ...mapGetters([
-      'getLocation'
-    ])
-  }
+  beforeCreate(){
+    this.$store.dispatch('GET_LOCATION');
+  },
+  /*async asyncData ( {store, $axios} ) {
+    await store.dispatch('GET_LOCATION');
+    let locationData = store.getters.getLocation;
+    let resData = await $axios.$get("http://34.67.204.12/videos/mostPopular/?part=snippet," +
+      "contentDetails&maxResults=15&regionCode=" + locationData);
+    console.log(resData);
+    return {
+      popularAll: resData,
+      countryCode: locationData
+    }
+  },*/
 }
 </script>
 

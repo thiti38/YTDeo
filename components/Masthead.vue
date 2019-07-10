@@ -50,11 +50,11 @@
         });
       },
       submit(){
-        this.$router.push({path: "/results", query: { search_query: this.search_query }});
+        this.$router.push({name: "results", query: { search_query: this.search_query }});
       },
       onClickSubmit(to){
         this.search_query = to;
-        this.$router.push({path: "/results", query: { search_query: to }});
+        this.$router.push({name: "results", query: { search_query: to }});
       }
     },
 

@@ -25,7 +25,7 @@
         </div>
       </div>
     </div>
-    <vue-content-loading class="video-loading-desktop" v-else :height="240" speed="3" primary="#383838" secondary="#323232">
+    <vue-content-loading class="video-loading-desktop" v-if="!mostPopular && mostPopular != null" :height="240" primary="#383838" secondary="#323232">
       <rect x="0" y="3" rx="1" ry="1" width="8%" height="5.5px"></rect>
 
       <rect x="0" y="14" rx="0" ry="0" width="19%" height="50px"></rect>
@@ -88,7 +88,7 @@
       <rect x="308" y="220" rx="1" ry="1" width="19%" height="6px"></rect>
       <rect x="308" y="228" rx="1" ry="1" width="10%" height="6px"></rect>
     </vue-content-loading>
-    <vue-content-loading v-if="!mostPopular" class="video-loading-mobile" :height="1150" speed="3" primary="#383838" secondary="#323232">
+    <vue-content-loading v-if="!mostPopular && mostPopular != null" class="video-loading-mobile" :height="1150" primary="#383838" secondary="#323232">
       <rect x="10" y="3" rx="3" ry="3" width="20%" height="20px"></rect>
 
       <rect x="0" y="39" rx="0" ry="0" width="100%" height="280px"></rect>
@@ -110,7 +110,7 @@
   import { VueContentLoading  } from 'vue-content-loading';
     export default {
       name: "MostPopularAll",
-      props: ["location"],
+      props: ["location", "popularAll"],
       components: {
         VueContentLoading ,
       },

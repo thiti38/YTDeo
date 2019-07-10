@@ -57,8 +57,8 @@
     async asyncData ({params, $axios}) {
       let api_url = "http://34.67.204.12/";
       let [resData, resRelate] = await Promise.all([
-        $axios.$get(api_url + "/videos/" + params.id + "?part=snippet,contentDetails"),
-        $axios.$get(api_url + "/video/relate/" + params.id)
+        $axios.$get(api_url + "videos/" + params.id + "?part=snippet,contentDetails"),
+        $axios.$get(api_url + "video/relate/" + params.id)
       ]);
       return {
         name: params.id,

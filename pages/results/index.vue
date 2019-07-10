@@ -48,11 +48,11 @@
           });
         },
         submit(){
-          this.$router.push({path: "/results", query: { search_query: this.search_query }});
+          this.$router.push({name: "results", query: { search_query: this.search_query }});
         },
         onClickSubmit(to){
           this.search_query = to;
-          this.$router.push({path: "/results", query: { search_query: to }});
+          this.$router.push({name: "results", query: { search_query: to }});
         }
       },
       async asyncData ({route, $axios, store}) {
@@ -61,7 +61,7 @@
         }
         let api_url = "http://34.67.204.12/";
         let [resData] = await Promise.all([
-          $axios.$get(api_url + "/search/list/?q=" + route.query.search_query +
+          $axios.$get(api_url + "search/list/?q=" + route.query.search_query +
             "&part=snippet&maxResults=50&type=video&regionCode=" + store.state.location)
         ]);
         return {
