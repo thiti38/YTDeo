@@ -54,14 +54,21 @@ export default {
       return check;
     }
   },
-  mounted(){
-    console.log(this.gl);
-  },
   async asyncData ({store, route, redirect, $axios}) {
     if (process.server) {
-      if (!store.getters.getLocation) {
+      if (!store.getters.getLocation && !route.query.gl) {
         let cc = await route.fullPath;
         redirect({name: "Service", query: {service: 'forLocation', continue: cc }});
+      } else {
+        store.commit('SET_LOCATION_GL', route.query.gl);
+        let locationData = route.query.gl;
+        let resData = await $axios.$get("http://34.67.204.12/videos/mostPopular/?part=snippet," +
+          "contentDetails&maxResults=15&regionCode=" + locationData);
+        return {
+          popularAll: resData,
+          countryCode: locationData,
+          gl: route.query.gl
+        }
       }
     } else {
       if (store.getters.getLocation || route.query.gl){
