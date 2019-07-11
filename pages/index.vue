@@ -54,17 +54,26 @@ export default {
       return check;
     }
   },
+  mounted(){
+    console.log(this.gl);
+  },
   async asyncData ({store, route, redirect, $axios}) {
-    if (!store.getters.getLocation){
-      let cc = await route.fullPath;
-      redirect({name: "Service", query: {service: 'forLocation', continue: cc }});
-    } else  {
-      let locationData = store.getters.getLocation;
-      let resData = await $axios.$get("http://34.67.204.12/videos/mostPopular/?part=snippet," +
-        "contentDetails&maxResults=15&regionCode=" + locationData);
-      return {
-        popularAll: resData,
-        countryCode: locationData
+    if (process.server) {
+      if (!store.getters.getLocation) {
+        let cc = await route.fullPath;
+        redirect({name: "Service", query: {service: 'forLocation', continue: cc }});
+      }
+    } else {
+      if (store.getters.getLocation || route.query.gl){
+        store.commit('SET_LOCATION_GL', store.getters.getLocation ? store.getters.getLocation : route.query.gl);
+        let locationData = store.getters.getLocation ? store.getters.getLocation : route.query.gl;
+        let resData = await $axios.$get("http://34.67.204.12/videos/mostPopular/?part=snippet," +
+          "contentDetails&maxResults=15&regionCode=" + locationData);
+        return {
+          popularAll: resData,
+          countryCode: locationData,
+          gl: route.query.gl
+        }
       }
     }
   },

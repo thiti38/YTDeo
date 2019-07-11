@@ -6,6 +6,10 @@ export const state = () => ({
 export const mutations = {
   SET_LOCATION (state, locationData) {
     state.location = locationData.countryCode;
+    localStorage.setItem('hl', locationData.countryCode);
+  },
+  SET_LOCATION_GL (state, GL) {
+    state.location = GL;
   },
   SET_MOST_POPULAR (state, resData) {
     state.popularAll = resData;
