@@ -13,10 +13,14 @@ export const mutations = {
 };
 
 export const actions = {
-  async GET_LOCATION ({state, commit}) {
-    let locationData = await this.$axios.$get("http://ip-api.com/json");
+  async GET_LOCATION_IP ({state, commit}, ip) {
+    let locationData = await this.$axios.$get("http://ip-api.com/json/" + ip);
     await commit('SET_LOCATION', locationData);
-  }
+  },
+  async GET_LOCATION ({state, commit}) {
+    let locationData = await this.$axios.$get("http://ip-api.com/json/");
+    await commit('SET_LOCATION', locationData);
+  },
 };
 
 export const getters = {

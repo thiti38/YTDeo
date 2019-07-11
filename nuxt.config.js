@@ -38,6 +38,10 @@ export default {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/moment',
+    ['@nuxtjs/google-adsense', {
+      id: 'ca-pub-7630454062211213',
+      pageLevelAds: true,
+    }]
   ],
   /*
   ** Build configuration

@@ -55,14 +55,15 @@
           this.$router.push({name: "results", query: { search_query: to }});
         }
       },
-      async asyncData ({route, $axios, store}) {
-        if (store.state.location === ""){
-          await store.dispatch('GET_LOCATION');
+      async asyncData ({route, $axios, store, redirect}) {
+        if (!store.getters.getLocation){
+          let cc = await route.fullPath;
+          redirect({name: "Service", query: {service: 'forLocation', continue: cc }});
         }
         let api_url = "http://34.67.204.12/";
         let [resData] = await Promise.all([
-          $axios.$get(api_url + "search/list/?q=" + route.query.search_query +
-            "&part=snippet&maxResults=50&type=video&regionCode=" + store.state.location)
+          $axios.$get(encodeURI(api_url + "search/list/?q=" + route.query.search_query +
+            "&part=snippet&maxResults=50&type=video&regionCode=" + store.state.location))
         ]);
         return {
           data: resData.items,

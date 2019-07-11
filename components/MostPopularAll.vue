@@ -110,21 +110,16 @@
   import { VueContentLoading  } from 'vue-content-loading';
     export default {
       name: "MostPopularAll",
-      props: ["location", "popularAll"],
+      props: ["location", "mostPopular"],
       components: {
         VueContentLoading ,
       },
-      data() {
-        return {
-          mostPopular: "",
-        }
-      },
-      created() {
+      /*created() {
         this.$axios.$get("http://34.67.204.12/videos/mostPopular/?part=snippet,contentDetails&maxResults=15&regionCode="
           + (this.location ? this.location : "US")).then(res => {
           this.mostPopular = res;
         });
-      },
+      },*/
       filters: {
         subStrVideoTitle: function(string) {
           if (string.length > 50)
