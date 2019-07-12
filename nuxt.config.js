@@ -1,4 +1,6 @@
 
+const axios = require('axios')
+
 export default {
   mode: 'universal',
   /*
@@ -41,8 +43,25 @@ export default {
     ['@nuxtjs/google-adsense', {
       id: 'ca-pub-7630454062211213',
       pageLevelAds: true,
-    }]
+    }],
+    '@nuxtjs/sitemap',
   ],
+
+
+  sitemap: {
+    hostname: 'http://www.ytdeo.com',
+    exclude: ['/Service'],
+    gzip: true,
+    defaults: {
+      changefreq: 'hourly',
+      priority: 0.80,
+      lastmod: new Date()
+    },
+    routes () {
+      return axios.get('http://34.67.204.12/videos/id/all').then(res => res.data.map(id => '/videos/' + id));
+    },
+  },
+
   /*
   ** Build configuration
   */
