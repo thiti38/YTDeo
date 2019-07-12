@@ -111,6 +111,7 @@ a {
   padding-top: 24px;
 }
 .video-primary-info {
+  display: flex;
   border-bottom: 1px solid rgb(42, 42, 42);
   padding: 20px 0 8px 0;
 }
