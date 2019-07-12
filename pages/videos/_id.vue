@@ -16,7 +16,7 @@
                 <span class="date">{{ data.snippet.publishedAt | moment("MMMM Do YYYY") }}</span>
               </div>
               <div class="video-show-more">
-                <div @click="isDesc"><svg><path fill="white" :d="d"></path></svg></div>
+                <div @click="isDesc"><svg viewBox="0 0 24 24"><path fill="white" :d="d"></path></svg></div>
               </div>
             </div>
             <div id="top-row" class="video-secondary-info" v-if="data && isDescShow">
@@ -149,7 +149,7 @@
             hid: 'ldjson-schema',
             type: 'application/ld+json',
             innerHTML: '{ "@context": "http://www.schema.org", "@type": "VideoObject",' +
-              '"name": "'+this.data.snippet.title+'", "description": "'+this.data.snippet.description+'",' +
+              '"name": "'+this.data.snippet.title.replace(/"/g, '\\\"')+'", "description": "'+this.data.snippet.description.replace(/"/g, '\\\"')+'",' +
               '"thumbnailUrl": "'+this.data.snippet.thumbnails.medium.url+'",' +
                     '"uploadDate": "'+this.data.snippet.publishedAt+'", ' +
                     '"duration": "'+this.data.contentDetails.duration+'",' +
@@ -166,7 +166,7 @@
 <style scoped>
   .video-show-more {
     padding-top: 4px;
-    height: 20px;
+    height: 28px;
   }
   @media only screen and (max-width: 600px) {
     .video-metadata-title {
