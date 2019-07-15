@@ -5,16 +5,24 @@
 
 <script>
     export default {
-      async asyncData({route}){
+      async asyncData({route, app, $axios}){
         return {
           service: route.query.service,
           continue: route.query.continue,
+          isHome: route.query.isHome,
         }
       },
       async created() {
-        await this.$store.dispatch('GET_LOCATION');
         if (this.service.toLowerCase() === 'forlocation') {
-          this.$router.push(this.continue);
+          let locationData = await this.$axios.$get("http://ip-api.com/json/");
+          this.$cookies.set('gl', locationData.countryCode, {
+            path: '/',
+            maxAge: 60 * 60 * 24 * 7
+          });
+          if(this.isHome) {
+            return this.$router.push(this.continue);
+          }
+          return this.$router.push(this.continue);
         }
       }
     }

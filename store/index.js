@@ -1,6 +1,5 @@
 export const state = () => ({
   location: "",
-  popularAll: []
 });
 
 export const mutations = {
@@ -10,9 +9,6 @@ export const mutations = {
   SET_LOCATION_GL (state, GL) {
     state.location = GL;
   },
-  SET_MOST_POPULAR (state, resData) {
-    state.popularAll = resData;
-  }
 };
 
 export const actions = {
@@ -20,7 +16,7 @@ export const actions = {
     let locationData = await this.$axios.$get("http://ip-api.com/json/" + ip);
     await commit('SET_LOCATION', locationData);
   },
-  async GET_LOCATION ({state, commit}) {
+  async GET_LOCATION ({commit}) {
     let locationData = await this.$axios.$get("http://ip-api.com/json/");
     await commit('SET_LOCATION', locationData);
   },
@@ -28,5 +24,4 @@ export const actions = {
 
 export const getters = {
   getLocation: state => state.location,
-  getPopularAll: state => state.popularAll
 };

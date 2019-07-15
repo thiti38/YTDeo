@@ -32,7 +32,8 @@ export default {
   */
   plugins: [
     '~/plugins/index',
-    { src: '~plugins/ga.js', ssr: false }
+    { src: '~plugins/ga.js', ssr: false },
+    { src: '~plugins/dfp.js', ssr: false }
   ],
   /*
   ** Nuxt.js modules
@@ -40,11 +41,14 @@ export default {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/moment',
-    ['@nuxtjs/google-adsense', {
+    /*['@nuxtjs/google-adsense', {
       id: 'ca-pub-7630454062211213',
       pageLevelAds: true,
-    }],
+    }],*/
     '@nuxtjs/sitemap',
+    'nuxt-device-detect',
+    'cookie-universal-nuxt',
+    '@nuxtjs/proxy'
   ],
 
 
@@ -74,11 +78,14 @@ export default {
   },
 
   server: {
-    port: process.env.PORT || 80, // default: 3000
+    port: process.env.PORT || 3000, // default: 3000
     host: process.env.HOST || '0.0.0.0', // default: localhost
   },
 
   axios: {
-    // proxyHeaders: false
-  }
+    proxy: true
+  },
+  proxy: {
+    '/api/': { target: 'http://34.67.204.12/', pathRewrite: {'^/api/': ''}, changeOrigin: true},
+  },
 }

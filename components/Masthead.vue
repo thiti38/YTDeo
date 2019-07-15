@@ -27,7 +27,6 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
   export default {
     props: ["q"],
     data() {
@@ -44,8 +43,13 @@
       onBlur() {
         setTimeout(() => this.in_search=false, 500);
       },
+      toHome() {
+        this.$router.push('/');
+      },
       handleSearch () {
-        this.$axios.$get("http://34.67.204.12/search?q=" + this.search_query + "&gl=" + this.getLocation).then(res => {
+        console.log("test");
+        this.$axios.$get("http://34.67.204.12/search?q=" + this.search_query + "&gl=" +
+        this.$cookies.get('gl')).then(res => {
           this.search_result = res[1];
         });
       },
@@ -57,15 +61,6 @@
         this.$router.push({name: "results", query: { search_query: to }});
       }
     },
-
-    beforeCreate() {
-      this.$store.dispatch('GET_LOCATION')
-    },
-    computed: {
-      ...mapGetters([
-        'getLocation'
-      ])
-    }
   }
 </script>
 
