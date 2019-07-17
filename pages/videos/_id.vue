@@ -7,8 +7,10 @@
         <div id="columns" class="video-watch-flex">
           <div id="primary" class="video-watch-flex">
             <div class="video-container">
-              <iframe class="video" :src="url" allowfullscreen>
-              </iframe>
+              <!--<iframe class="video" :src="url" @onStateChange="onPlayerStateChange" allowfullscreen>
+              </iframe>-->
+              <youtube class="video" :video-id="name" player-width="100%" player-height="100%"
+                       :player-vars="{autoplay: 1}" @ended="ended"></youtube>
             </div>
             <div class="video-primary-info" v-if="data">
               <div class="video-metadata-title">
@@ -29,11 +31,21 @@
             <div class="video-ads-mobile" v-else>
               <google-ad unit="YTDeo/YTDeo_Rectangle" id="YTDeo_Rectangle_Mobile"></google-ad>
             </div>
-            <div class="video-comments powr-comments" id="d2c9dc1c_1561428084" v-if="data"></div>
+            <!--<div class="video-comments powr-comments" id="d2c9dc1c_1561428084" v-if="data"></div>-->
           </div>
           <div id="secondary" class="video-watch-flex" v-if="relate">
             <div id="related">
               <google-ad unit="YTDeo/YTDeo_Mobile_Leaderboard" id="YTDeo_Mobile_Leaderboard"></google-ad>
+              <div class="video-compact-autoplay">
+                <div id="upnext">
+                  Up next
+                </div>
+                <div id="autoplay">
+                  Autoplay
+                </div>
+                <toggle-button style="margin-left: 8px;" @change="onAutoplayChange" :value="ap" :color="{checked: '#373737',
+                unchecked: '#373737'}" :switch-color="{checked: '#3ea6ff', unchecked: '#909090'}" />
+              </div>
               <div class="video-related-results" v-for="result in relate" :key="result.etag">
                 <div class="video-related-renderer">
                   <div class="video-thumbnail">
@@ -68,18 +80,21 @@
       Masthead
     },
     async asyncData ({params, $axios, app, redirect, route}) {
-      if (!app.$cookies.get('gl')) {
+      if (app.$cookies.get('gl') === undefined) {
         let cc = await route.fullPath;
         redirect({name: "Service", query: {service: 'forLocation', continue: cc }});
       }
-      let api_url = "http://34.67.204.12/";
-      if (process.client) {
-        api_url = "/api/";
-      }
+      let api_url = "/api/";
       let [resData, resRelate] = await Promise.all([
         $axios.$get(api_url + "videos/" + params.id + "?part=snippet,contentDetails"),
         $axios.$get(api_url + "video/relate/" + params.id)
       ]);
+      if (app.$cookies.get('ap') === undefined) {
+        await app.$cookies.set('ap', true, {
+          path: '/',
+          maxAge: 60 * 60 * 24 * 7
+        });
+      }
       return {
         name: params.id,
         data: resData.items[0],
@@ -87,7 +102,7 @@
         url: "https://www.youtube.com/embed/" + params.id + "?autoplay=1",
         isDescShow: false,
         d: 'M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z',
-
+        ap: app.$cookies.get('ap')
       }
     },
     methods: {
@@ -95,6 +110,20 @@
         this.isDescShow = !this.isDescShow;
         this.d = this.isDescShow ? 'M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z' : 'M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z';
       },
+      ended() {
+        if (this.ap){
+          this.$router.push("./" + this.relate[0].id.videoId);
+        }
+      },
+      onAutoplayChange() {
+        this.ap = !this.ap;
+        this.$cookies.set('ap', this.ap, {
+          path: '/',
+          maxAge: 60 * 60 * 24 * 7
+        });
+      }
+    },
+    mounted() {
     },
     filters: {
       subStrVideoTitle: function(string) {
@@ -147,7 +176,7 @@
         ],
         __dangerouslyDisableSanitizers: ['script'],
         script: [
-          { src: 'https://www.powr.io/powr.js?platform=html', async: true, defer: true },
+          //{ src: 'https://www.powr.io/powr.js?platform=html', async: true, defer: true },
           {
             hid: 'ldjson-schema',
             type: 'application/ld+json',
@@ -167,7 +196,28 @@
 </script>
 
 <style scoped>
+  .video-compact-autoplay {
+    display: flex;
+    margin-bottom: 12px;
+    align-items: center;
+  }
+  #upnext {
+    flex: 1;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 400;
+  }
+  #autoplay {
+    font-size: 13px;
+    color: #aaaaaa;
+    font-weight: 500;
+    letter-spacing: .007px;
+    text-transform: uppercase;
+  }
   @media only screen and (max-width: 600px) {
+    .video-compact-autoplay {
+      padding: 12px 12px 0 12px;
+    }
     .video-show-more {
       height: 28px;
     }

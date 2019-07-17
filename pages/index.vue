@@ -73,7 +73,7 @@ export default {
         });
         locationData = route.query.gl;
       }
-      let [resData] = await Promise.all([$axios.$get("http://34.67.204.12/videos/mostPopular/?part=snippet," +
+      let [resData] = await Promise.all([$axios.$get("/api/videos/mostPopular/?part=snippet," +
         "contentDetails&maxResults=15&regionCode=" + locationData)]);
       return {
         popularAll: resData,
@@ -115,6 +115,25 @@ export default {
   }
   .video-ads-mobile {
     border-bottom: 1px solid #2a2a2a;
+  }
+  .video-overlay {
+    display: inline-block;
+    position: relative;
+  }
+  .video-thumbnail-with-overlay {
+    display: inline-grid;
+    width: 100%;
+  }
+  .video-overlay-time-status {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    color: #FFFFFF;
+    background-color: rgba(0, 0, 0, 0.80);
+    padding: 2px 4px;
+    border-radius: 2px;
+    margin: 4px;
+    font-size: 12px;
   }
   .video-title-container {
     color: #ffffff;

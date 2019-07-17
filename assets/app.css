@@ -121,6 +121,15 @@ a {
 }
 .video-related-results {
   display: flex;
+  border-bottom: 1px solid rgb(42, 42, 42);
+  padding-bottom: 4px;
+  margin-bottom: 12px;
+}
+.video-related-results ~ .video-related-results {
+  display: flex;
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
 }
 .video-img {
   display: block;

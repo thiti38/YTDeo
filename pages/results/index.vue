@@ -56,7 +56,7 @@
         }
       },
       async asyncData ({route, $axios, redirect, app}) {
-        if (!app.$cookies.get('gl')) {
+        if (app.$cookies.get('gl') === undefined) {
           let cc = await route.fullPath;
           redirect({name: "Service", query: {service: 'forLocation', continue: cc }});
           /*let locationData = await $axios.$get("http://ip-api.com/json/");

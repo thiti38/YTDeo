@@ -9,9 +9,14 @@
           <div class="video-grid-renderer" v-for="item in mostPopular.items" :key="item.etag">
             <div class="video-grid-video-renderer">
               <div>
-                <nuxt-link :to="'/videos/' + item.id" >
+                <nuxt-link :to="'/videos/' + item.id" class="video-thumbnail-with-overlay">
                   <img class="video-img-shadow" :src="item.snippet.thumbnails.maxres ?
                   item.snippet.thumbnails.maxres.url : item.snippet.thumbnails.medium.url" />
+                  <div class="video-overlay">
+                    <div class="video-overlay-time-status">
+                      {{item.contentDetails.duration  | conISO8601ToSeconds }}
+                    </div>
+                  </div>
                 </nuxt-link>
               </div>
               <div class="video-metadata">
@@ -120,7 +125,7 @@
         }
       },
       mounted() {
-        this.$axios.$get("http://34.67.204.12/videos/mostPopular/?part=snippet,contentDetails&maxResults=15" +
+        this.$axios.$get("/api/videos/mostPopular/?part=snippet,contentDetails&maxResults=15" +
           "&videoCategoryId=" + this.videoCategoryId + "&regionCode="
           + (this.location)).then(res => {
           this.mostPopular = res;
@@ -142,6 +147,19 @@
           else
             return string.substring(0, 30);
         },
+        conISO8601ToSeconds(string) {
+          let reptms = /^PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$/;
+          let hours = 0, minutes = 0, seconds = 0, totalseconds;
+          if (reptms.test(string)) {
+            let matches = reptms.exec(string);
+            if (matches[1]) hours = Number(matches[1]);
+            if (matches[2]) minutes = Number(matches[2]);
+            if (matches[3]) seconds = Number(matches[3]);
+            if (seconds < 10) seconds = '0' + seconds;
+            totalseconds = hours ? hours + ":" +  minutes + ":" + seconds : minutes + ":" + seconds;
+          }
+          return totalseconds;
+        }
       },
     }
 </script>

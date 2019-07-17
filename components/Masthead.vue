@@ -79,7 +79,7 @@
     background-color: #ffffff;
   }
   .result_block{
-    padding: 20px 0;
+    //padding: 20px 0;
   }
   .video-search-result-text{
   }

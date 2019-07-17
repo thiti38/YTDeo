@@ -33,7 +33,9 @@ export default {
   plugins: [
     '~/plugins/index',
     { src: '~plugins/ga.js', ssr: false },
-    { src: '~plugins/dfp.js', ssr: false }
+    { src: '~plugins/dfp.js', ssr: false },
+    { src: '~plugins/youtube-embed.js', ssr: false },
+    { src: '~plugins/toggle-button.js', ssr: false },
   ],
   /*
   ** Nuxt.js modules
