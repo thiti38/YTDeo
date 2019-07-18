@@ -43,8 +43,10 @@
                 <div id="autoplay">
                   Autoplay
                 </div>
-                <toggle-button style="margin-left: 8px;" @change="onAutoplayChange" :value="ap" :color="{checked: '#373737',
+                <no-ssr>
+                  <toggle-button style="margin-left: 8px;" @change="onAutoplayChange" :value="ap" :color="{checked: '#373737',
                 unchecked: '#373737'}" :switch-color="{checked: '#3ea6ff', unchecked: '#909090'}" />
+                </no-ssr>
               </div>
               <div class="video-related-results" v-for="result in relate" :key="result.etag">
                 <div class="video-related-renderer">
@@ -227,8 +229,21 @@
     .video-show-more {
       width: 7%;
     }
+  }@media only screen and (max-width: 999px) and (min-width: 600px)  {
+    .video-compact-autoplay {
+      padding: 24px 24px 0 24px;
+    }
+    .video-show-more {
+      height: 28
+    }
+    .video-metadata-title {
+      width: 93%;
+    }
+    .video-show-more {
+      width: 7%;
+    }
   }
-  @media only screen and (min-width: 600px) {
+  @media only screen and (min-width: 999px) {
     .video-show-more {
       padding-top: 4px;
       height: 28px;
