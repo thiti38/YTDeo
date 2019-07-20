@@ -83,7 +83,7 @@ export default {
     else {
       locationData = app.$cookies.get('gl') !== undefined ? app.$cookies.get('gl') : "US";
       let [resData] = await Promise.all([$axios.$get("/api/videos/mostPopular/?part=snippet," +
-        "contentDetails&maxResults=15&regionCode=" + "th")]);
+        "contentDetails&maxResults=15&regionCode=" + locationData)]);
       return {
         popularAll: resData,
         countryCode: locationData,
@@ -156,6 +156,7 @@ export default {
       background: #212121;
       top: 56px;
       position: sticky;
+      z-index: 1000;
     }
     .video-page-manager {
       padding: 0;

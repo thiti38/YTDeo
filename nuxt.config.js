@@ -36,6 +36,7 @@ export default {
     { src: '~plugins/dfp.js', ssr: false },
     { src: '~plugins/youtube-embed.js', ssr: false },
     { src: '~plugins/toggle-button.js', ssr: false },
+    { src: '~plugins/v-click-outside.js', ssr: false },
   ],
   /*
   ** Nuxt.js modules

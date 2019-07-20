@@ -35,6 +35,50 @@
           </div>
           <div id="secondary" class="video-watch-flex" v-if="relate">
             <div id="related">
+              <div id="playlist">
+                <div class="video-playlist-panel">
+                  Mix - อ๊อฟ ปองศักดิ์ - อยากให้เธอเจอคนแบบเธอ 【OFFICIAL MV】
+                </div>
+                <div class="video-playlist-container">
+                  <div class="video-playlist-items">
+                    <div class="video-playlist-panel-renderer">
+                      <span class="index">▶</span>
+                      <div class="video-playlist-thumbnail">
+                        <a href="/videos/U3r0Iw8ewOE" class="">
+                          <img width="100" src="https://i.ytimg.com/vi/U3r0Iw8ewOE/mqdefault.jpg" alt="พาแฟนไปดู Annabelle!! ผีตามกลับบ้าน" class="video-img"></a>
+                      </div>
+                      <div class="video-playlist-meta">
+                        <a href="/videos/U3r0Iw8ewOE">
+                          <h3 class="video-title">พาแฟนไปดู Annabelle!! ผีตามกลับบ้าน
+                          </h3>
+                          <div class="video-meta-block">
+                            Kaykai Salaider
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="video-playlist-items" v-for="x in 80">
+                    <div class="video-playlist-panel-renderer">
+                      <span class="index"></span>
+                      <div class="video-playlist-thumbnail">
+                        <a href="/videos/U3r0Iw8ewOE" class="">
+                          <img width="100" src="https://i.ytimg.com/vi/U3r0Iw8ewOE/mqdefault.jpg" alt="พาแฟนไปดู Annabelle!! ผีตามกลับบ้าน" class="video-img"></a>
+                      </div>
+                      <div class="video-playlist-meta">
+                        <a href="/videos/U3r0Iw8ewOE">
+                          <h3 class="video-title">พาแฟนไปดู Annabelle!! ผีตามกลับบ้าน
+                          </h3>
+                          <div class="video-meta-block">
+                            Kaykai Salaider
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- -->
+                </div>
+              </div>
               <google-ad unit="YTDeo/YTDeo_Mobile_Leaderboard" id="YTDeo_Mobile_Leaderboard"></google-ad>
               <div class="video-compact-autoplay">
                 <div id="upnext">
@@ -215,6 +259,57 @@
     font-weight: 500;
     letter-spacing: .007px;
     text-transform: uppercase;
+  }
+  #playlist {
+    margin-bottom: 24px;
+    max-height: 502px;
+  }
+  .video-playlist-items {
+    display: flex;
+    padding: 4px 8px 4px 0;
+  }
+  .video-playlist-panel {
+    white-space: normal;
+    font-size: 14px;
+    color: #ffffff;
+    padding: 12px 16px;
+    background-color: rgba(136, 136, 136, 0.4);
+  }
+  .video-playlist-container {
+    background-color: rgba(136, 136, 136, 0.2);
+    height: 100%;
+    overflow-y: auto;
+    padding-top: 4px;
+    max-height: 350px;
+  }
+  .video-playlist-container::-webkit-scrollbar {
+    width: 8px;
+  }
+  .video-playlist-container::-webkit-scrollbar-thumb {
+    height: 56px;
+    background: hsla(0, 0%, 53.3%, .4);
+  }
+  .index {
+    text-align: center;
+    min-width: 24px;
+    display: flex;
+    flex-direction: column;
+    color: hsl(0, 0%, 53.3%);
+    justify-content: center;
+  }
+  .video-playlist-panel-renderer {
+    display: flex;
+  }
+  .video-playlist-thumbnail {
+    width: 100px;
+    height: 56px;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+  .video-playlist-meta {
+    padding: 0 8px;
   }
   @media only screen and (max-width: 600px) {
     .video-compact-autoplay {
