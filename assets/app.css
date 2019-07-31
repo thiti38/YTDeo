@@ -155,6 +155,7 @@ a {
 }
 .video-title {
   color: rgb(255, 255, 255);
+  font-weight: 400;
   margin-bottom: 4px;
 }
 .video-simple-endpoint {

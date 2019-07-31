@@ -161,9 +161,21 @@
           return totalseconds;
         }
       },
+      watch: {
+        location: function(val) {
+          this.$axios.$get("/api/videos/mostPopular/?part=snippet,contentDetails&maxResults=15" +
+                  "&videoCategoryId=" + this.videoCategoryId + "&regionCode="
+                  + (val)).then(res => {
+            this.mostPopular = res;
+          }).catch(e => {
+            console.log(e);
+            this.mostPopular = null;
+          });
+        }
+      },
     }
 </script>
 
-<style scoped>
+<style>
 
 </style>

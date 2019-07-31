@@ -9,12 +9,12 @@
         <div class="video-ads-mobile" v-else>
           <google-ad unit="YTDeo/YTDeo_Rectangle" id="YTDeo_Rectangle"></google-ad>
         </div>
-        <most-popular-all :mostPopular="popularAll" :location="countryCode" />
-        <most-popular :location="countryCode" videoCategoryId="10" video_title="Music" />
-        <most-popular :location="countryCode" videoCategoryId="1" video_title="Film & Animation" />
-        <most-popular :location="countryCode" videoCategoryId="17" video_title="Sports" />
-        <most-popular :location="countryCode" videoCategoryId="20" video_title="Gaming" />
-        <most-popular :location="countryCode" videoCategoryId="24" video_title="Entertainment" />
+        <most-popular-all :mostPopular.sync="popularAll" :location.sync="countryCode" />
+        <most-popular :location.sync="countryCode" videoCategoryId="10" video_title="Music" />
+        <most-popular :location.sync="countryCode" videoCategoryId="1" video_title="Film & Animation" />
+        <most-popular :location.sync="countryCode" videoCategoryId="17" video_title="Sports" />
+        <most-popular :location.sync="countryCode" videoCategoryId="20" video_title="Gaming" />
+        <most-popular :location.sync="countryCode" videoCategoryId="24" video_title="Entertainment" />
       </div>
     </div>
   </div>
@@ -52,6 +52,13 @@ export default {
       this.$cookies.set('gl', locationData, {
         path: '/',
         maxAge: 60 * 60 * 24 * 7
+      });
+      this.countryCode = locationData;
+      this.$axios.$get("/api/videos/mostPopular/?part=snippet,contentDetails&maxResults=15" +
+              "&regionCode=" + (locationData)).then(res => {
+        this.popularAll = res;
+      }).catch(e => {
+        console.log(e);
       });
     }
   },

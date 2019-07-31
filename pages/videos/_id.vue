@@ -28,9 +28,6 @@
             <div class="video-ads-desktop" style="padding-bottom: 24px;" v-if="$device.isDesktop">
               <google-ad unit="YTDeo/YTDeo_Rectangle" id="YTDeo_Rectangle_Desktop"></google-ad>
             </div>
-            <div class="video-ads-mobile" v-else>
-              <google-ad unit="YTDeo/YTDeo_Rectangle" id="YTDeo_Rectangle_Mobile"></google-ad>
-            </div>
             <!--<div class="video-comments powr-comments" id="d2c9dc1c_1561428084" v-if="data"></div>-->
           </div>
           <div id="secondary" class="video-watch-flex" v-if="relate">
@@ -79,7 +76,7 @@
               <youtube class="video" :video-id="name" player-width="100%" player-height="100%"
                        :player-vars="{autoplay: 1}" @ended="ended"></youtube>
             </div>
-            <div class="video-primary-info" v-if="data">
+            <div class="video-primary-info" v-if="data && $device.isDesktop" >
               <div class="video-metadata-title">
                 <h1 class="title">{{ data.items[index].snippet.title }}</h1>
                 <span class="date">{{ data.items[index].snippet.publishedAt | moment("MMMM Do YYYY") }}</span>
@@ -95,18 +92,15 @@
             <div class="video-ads-desktop" style="padding-bottom: 24px;" v-if="$device.isDesktop">
               <google-ad unit="YTDeo/YTDeo_Rectangle" id="YTDeo_Rectangle_Desktop"></google-ad>
             </div>
-            <div class="video-ads-mobile" v-else>
-              <google-ad unit="YTDeo/YTDeo_Rectangle" id="YTDeo_Rectangle_Mobile"></google-ad>
-            </div>
             <!--<div class="video-comments powr-comments" id="d2c9dc1c_1561428084" v-if="data"></div>-->
           </div>
           <div id="secondary" class="video-watch-flex" v-if="relate">
             <div id="related">
-              <div id="playlist">
+              <div id="playlist" :class="{playlist_desktop: $device.isDesktop}">
                 <div class="video-playlist-panel">
                   Now Playing - {{data.items[index].snippet.title}}
                 </div>
-                <div class="video-playlist-container" ref="playlist">
+                <div class="video-playlist-container" :class="{desktop: $device.isDesktop}" ref="playlist">
                   <div class="video-playlist-items" v-for="(video, i) in data.items">
                     <div class="video-playlist-panel-renderer">
                       <span v-if="index === i" ref="currentPlay" class="index">▶</span>
@@ -117,12 +111,9 @@
                         </nuxt-link>
                       </div>
                       <div class="video-playlist-meta">
-                        <nuxt-link :to="'/videos/' + video.contentDetails.videoId + '/?list=' + $route.query.list + '&index=' + ++i" >
+                        <nuxt-link :to="'/videos/' + video.contentDetails.videoId + '/?list=' + $route.query.list + '&index=' + i" >
                           <h3 class="video-title">{{video.snippet.title | subStrVideoTitle}}
                           </h3>
-                          <div class="video-meta-block">
-                            {{video.snippet.channelTitle}}
-                          </div>
                         </nuxt-link>
                       </div>
                     </div>
@@ -130,7 +121,9 @@
                   <!-- -->
                 </div>
               </div>
-              <google-ad unit="YTDeo/YTDeo_Mobile_Leaderboard" id="YTDeo_Mobile_Leaderboard"></google-ad>
+              <div class="video-ads-mobile" :class="{mobile: !$device.isDesktop}" v-if="!$device.isDesktop">
+                <google-ad unit="YTDeo/YTDeo_Rectangle" id="YTDeo_Rectangle_Mobile"></google-ad>
+              </div>
               <div class="video-related-results" v-for="result in relate" :key="result.etag">
                 <div class="video-related-renderer">
                   <div class="video-thumbnail">
@@ -299,13 +292,62 @@
       } else {
         return {
 
+          title: this.data.items[this.index].snippet.title + ' - YTDeo',
+          meta: [
+            { hid: 'title', name: 'title', content: this.data.items[this.index].snippet.title },
+            { hid: 'description', name: 'description', content: this.data.items[this.index].snippet.description },
+            {property: 'og:title', content: this.data.items[this.index].snippet.title},
+            {property: 'og:site_name', content: 'YTDeo'},
+            {property: 'og:type', content: 'video.movie'},
+            {property: 'og:url', content: 'http://ytdeo.com/videos/' + this.$route.params.id},
+            {property: 'og:image', content: this.data.items[this.index].snippet.thumbnails.maxres
+                      ? this.data.items[this.index].snippet.thumbnails.maxres.url : this.data.items[this.index].snippet.thumbnails.standard
+                              ? this.data.items[this.index].snippet.thumbnails.standard.url : this.data.items[this.index].snippet.thumbnails.high
+                                      ? this.data.items[this.index].snippet.thumbnails.high.url : this.data.items[this.index].snippet.thumbnails.medium
+                                              ? this.data.items[this.index].snippet.thumbnails.medium.url : this.data.items[this.index].snippet.thumbnails.default.url},
+            {property: 'og:description', content: this.data.items[this.index].snippet.description},
+            {property: 'og:video', content: "https://www.youtube.com/embed/"+ this.$route.params.id},
+            {name: 'twitter:card', content: 'summary'},
+            {name: 'twitter:site', content: 'http://ytdeo.com/videos/' + this.$route.params.id},
+            {name: 'twitter:title', content: this.data.items[this.index].snippet.title},
+            {name: 'twitter:description', content: this.data.items[this.index].snippet.description},
+
+            {name: 'twitter:image:src', content: this.data.items[this.index].snippet.thumbnails.maxres
+                      ? this.data.items[this.index].snippet.thumbnails.maxres.url : this.data.items[this.index].snippet.thumbnails.standard
+                              ? this.data.items[this.index].snippet.thumbnails.standard.url : this.data.items[this.index].snippet.thumbnails.high
+                                      ? this.data.items[this.index].snippet.thumbnails.high.url : this.data.items[this.index].snippet.thumbnails.medium
+                                              ? this.data.items[this.index].snippet.thumbnails.medium.url : this.data.items[this.index].snippet.thumbnails.default.url},
+            {itemprop: 'name', content: this.data.items[this.index].snippet.title},
+            {itemprop: 'description', content: this.data.items[this.index].snippet.description},
+            {itemprop: 'image', content: this.data.items[this.index].snippet.thumbnails.maxres
+                      ? this.data.items[this.index].snippet.thumbnails.maxres.url : this.data.items[this.index].snippet.thumbnails.standard
+                              ? this.data.items[this.index].snippet.thumbnails.standard.url : this.data.items[this.index].snippet.thumbnails.high
+                                      ? this.data.items[this.index].snippet.thumbnails.high.url : this.data.items[this.index].snippet.thumbnails.medium
+                                              ? this.data.items[this.index].snippet.thumbnails.medium.url : this.data.items[this.index].snippet.thumbnails.default.url},
+          ],
+          __dangerouslyDisableSanitizers: ['script'],
+          script: [
+            //{ src: 'https://www.powr.io/powr.js?platform=html', async: true, defer: true },
+            {
+              hid: 'ldjson-schema',
+              type: 'application/ld+json',
+              innerHTML: '{ "@context": "http://www.schema.org", "@type": "VideoObject",' +
+                      '"name": "'+this.data.items[this.index].snippet.title.replace(/"/g, '\\\"')+'", "description": "'+this.data.items[this.index].snippet.description.replace(/"/g, '\\\"')+'",' +
+                      '"thumbnailUrl": "'+this.data.items[this.index].snippet.thumbnails.medium.url+'",' +
+                      '"uploadDate": "'+this.data.items[this.index].snippet.publishedAt+'", ' +
+                      '"duration": "'+this.data.items[this.index].contentDetails.duration+'",' +
+                      '"embedUrl": "https://www.youtube.com/embed/' + this.$route.params.id +'"}',
+              body: true,
+              defer: true
+            },
+          ],
         }
       }
     }
   }
 </script>
 
-<style scoped>
+<style>
   .video-compact-autoplay {
     display: flex;
     margin-bottom: 12px;
@@ -324,9 +366,12 @@
     letter-spacing: .007px;
     text-transform: uppercase;
   }
-  #playlist {
+  .playlist_desktop {
     margin-bottom: 24px;
     max-height: 502px;
+  }
+  .video-ads-mobile.mobile {
+    margin-bottom: 24px;
   }
   .video-playlist-items {
     display: flex;
@@ -344,6 +389,8 @@
     height: 100%;
     overflow-y: auto;
     padding-top: 4px;
+  }
+  .video-playlist-container.desktop {
     max-height: 350px;
   }
   .video-playlist-container::-webkit-scrollbar {

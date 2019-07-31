@@ -140,7 +140,7 @@
     }
 </script>
 
-<style scoped>
+<style>
   .video-dismissable {
     display: flex;
     position: relative;

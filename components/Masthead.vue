@@ -81,6 +81,7 @@
           path: '/',
           maxAge: 60 * 60 * 24 * 7
         });
+        this.currentGL = locationData;
       }
       this.$axios.$get("regionListMin.json").then(res => {
         this.glList = res;
@@ -127,7 +128,7 @@
   }
 </script>
 
-<style scoped>
+<style>
   .video-logo {
     display: flex;
     align-items: center;
