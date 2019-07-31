@@ -90,5 +90,6 @@ export default {
   },
   proxy: {
     '/api/': { target: 'http://34.67.204.12/', pathRewrite: {'^/api/': ''}, changeOrigin: true},
+    '/apiEx/' : { target: 'https://youtube.com/', pathRewrite: {'^/apiEx/': ''}, changeOrigin: true},
   },
 }

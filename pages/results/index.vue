@@ -56,15 +56,15 @@
         }
       },
       async asyncData ({route, $axios, redirect, app}) {
-        if (app.$cookies.get('gl') === undefined) {
+        /*if (app.$cookies.get('gl') === undefined) {
           let cc = await route.fullPath;
           redirect({name: "Service", query: {service: 'forLocation', continue: cc }});
-          /*let locationData = await $axios.$get("http://ip-api.com/json/");
+          let locationData = await $axios.$get("http://ip-api.com/json/");
           app.$cookies.set('gl', locationData ? locationData.countryCode : "US", {
             path: '/',
             maxAge: 60 * 60 * 24 * 7
-          });*/
-        }
+          });
+        }*/
         let api_url = "http://34.67.204.12/";
         let [resData] = await Promise.all([
           $axios.$get(encodeURI(api_url + "search/list/?q=" + route.query.search_query +

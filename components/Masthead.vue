@@ -73,7 +73,15 @@
         currentGL: this.$cookies.get('gl'),
       }
     },
-    created() {
+    async created() {
+      if (this.$cookies.get('gl') === undefined || this.$cookies.get('gl') === "") {
+        let locationData = await this.$axios.$get("http://ip-api.com/json/");
+        locationData = locationData.countryCode;
+        this.$cookies.set('gl', locationData, {
+          path: '/',
+          maxAge: 60 * 60 * 24 * 7
+        });
+      }
       this.$axios.$get("regionListMin.json").then(res => {
         this.glList = res;
       });
