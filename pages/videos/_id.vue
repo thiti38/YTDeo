@@ -1,4 +1,4 @@
-<!--suppress JSUnresolvedVariable -->
+<!--suppress JSUnresolvedVariable, XmlDuplicatedId, HtmlUnknownTag, HtmlUnknownAttribute, SpellCheckingInspection -->
 <template>
   <div id="app">
     <div id="content" class="video-app" v-if="data">
@@ -25,7 +25,7 @@
               <div style="transition: all 5s ease-in-out;" class="content">{{ isDescShow ?
                 data.snippet.description : data.snippet.description.split("\n").slice(0,3).join("\n") }}</div>
             </div>
-            <div class="video-ads-desktop" style="padding-bottom: 24px;" v-if="$device.isDesktop">
+            <div class="video-ads-desktop" style="padding-bottom: 24px;" v-if="!$device.isDesktop">
               <google-ad unit="YTDeo/YTDeo_Rectangle" id="YTDeo_Rectangle_Desktop"></google-ad>
             </div>
             <!--<div class="video-comments powr-comments" id="d2c9dc1c_1561428084" v-if="data"></div>-->
@@ -47,7 +47,7 @@
               </div>
               <div :id="(i === 0)? 'first': ''" class="video-related-results" v-for="(result, i) in relate" :key="result.etag">
                 <div class="video-related-renderer">
-                  <div class="video-thumbnail">
+                  <div class="video-thumbnail-relate">
                     <nuxt-link :to="'/videos/' + result.id.videoId" >
                       <img class="video-img" width="168" :src="result.snippet.thumbnails.medium.url"
                            :alt="result.snippet.title" />
@@ -126,7 +126,7 @@
               </div>
               <div class="video-related-results" v-for="result in relate" :key="result.etag">
                 <div class="video-related-renderer">
-                  <div class="video-thumbnail">
+                  <div class="video-thumbnail-relate">
                     <nuxt-link :to="'/videos/' + result.id.videoId" >
                       <img class="video-img" width="168" :src="result.snippet.thumbnails.medium.url"
                            :alt="result.snippet.title" />
@@ -175,6 +175,7 @@
           maxAge: 60 * 60 * 24 * 7
         });
       }
+      console.log(await $axios.$get('https://www.youtube.com/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ?pbj=1'));
       return {
         name: params.id,
         index: route.query.index ? route.query.index - 1 : 0,

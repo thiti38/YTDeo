@@ -1,3 +1,4 @@
+<!--suppress JSUnresolvedVariable -->
 <template>
   <div id="app">
     <div id="content" class="video-app">
