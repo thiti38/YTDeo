@@ -1,3 +1,4 @@
+<!--suppress JSUnresolvedVariable -->
 <template>
   <div id="app">
     <div id="content" class="video-app">
@@ -11,6 +12,38 @@
         </div>
         <most-popular-all :mostPopular.sync="popularAll" :location.sync="countryCode" />
         <most-popular :location.sync="countryCode" videoCategoryId="10" video_title="Music" />
+        <div class="video-page-manager">
+          <div v-if="playlist">
+            <div class="video-grid-subheader video-shelf">
+              <h2 class="video-title-container">YTDeo Playlist</h2>
+            </div>
+            <div class="video-shelf">
+              <div id="items" class="video-grid-renderer">
+                <div class="video-grid-renderer" v-for="item in playlist.items" :key="item.etag">
+                  <div class="video-grid-video-renderer">
+                    <div>
+                      <nuxt-link :to="'/videos/' + item.snippet.thumbnails.default.url.replace('https://i.ytimg.com/vi/', '').replace('/default.jpg', '/?list=')
+                       + item.id.playlistId + '&index=1'" class="video-thumbnail-with-overlay">
+                        <img class="video-img-shadow" :src="item.snippet.thumbnails.medium.url" />
+                        <div class="video-overlay">
+                          <div class="video-overlay-time-status">
+                          </div>
+                        </div>
+                      </nuxt-link>
+                    </div>
+                    <div class="video-metadata">
+                      <nuxt-link :to="'/videos/' + item.snippet.thumbnails.default.url.replace('https://i.ytimg.com/vi/', '').replace('/default.jpg', '/?list=')
+                       + item.id.playlistId + '&index=1'" >
+                        <h3 class="video-title">{{ item.snippet.title }}</h3>
+                        <div class="video-meta-block">{{ item.snippet.channelTitle | subStrMetaData }}</div>
+                      </nuxt-link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <most-popular :location.sync="countryCode" videoCategoryId="1" video_title="Film & Animation" />
         <most-popular :location.sync="countryCode" videoCategoryId="17" video_title="Sports" />
         <most-popular :location.sync="countryCode" videoCategoryId="20" video_title="Gaming" />
@@ -39,6 +72,12 @@ export default {
     suggest = JSON.stringify(JSON.parse(suggest[1].substr(0, suggest[1].length-1))[1]);
     console.log(suggest);
   },*/
+  data(){
+    return {
+      glList: [],
+      playlist: [],
+    }
+  },
   async created(){
     /*if (!this.$store.getters.getLocation){
       await this.$store.dispatch('GET_LOCATION');
@@ -61,6 +100,15 @@ export default {
         console.log(e);
       });
     }
+    await this.$axios.$get("regionListMin.json").then(res => {
+      this.glList = res.find((data) => {
+        return data["id"] === this.countryCode
+      });
+    });
+    this.$axios.$get("https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=UC-9-kyTW8ZkZNDHQJ6FgpwQ&" +
+            "maxResults=5&q=" + this.glList.snippet.name + "&type=playlist&regionCode="+ this.countryCode +"&key=AIzaSyBxorfVel1-EbTxWjbAZooJvrPeMFotgTA").then(res => {
+              this.playlist = res;
+    })
   },
   methods: {
   },

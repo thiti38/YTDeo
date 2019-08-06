@@ -44,7 +44,7 @@
           setTimeout(() => this.in_search=false, 500);
         },
         handleSearch: function (e) {
-          this.$axios.$get("http://34.67.204.12/search?q=" + this.search_query).then(res => {
+          this.$axios.$get("/api/search?q=" + this.search_query).then(res => {
             this.search_result = res[1];
           });
         },
@@ -66,7 +66,7 @@
             maxAge: 60 * 60 * 24 * 7
           });
         }*/
-        let api_url = "http://34.67.204.12/";
+        let api_url = "/api/";
         let [resData] = await Promise.all([
           $axios.$get(encodeURI(api_url + "search/list/?q=" + route.query.search_query +
             "&part=snippet&maxResults=50&type=video&regionCode=" + app.$cookies.get('gl')))
