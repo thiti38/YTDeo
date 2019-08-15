@@ -101,20 +101,22 @@
                   Now Playing - {{data.items[index].snippet.title}}
                 </div>
                 <div class="video-playlist-container" :class="{desktop: $device.isDesktop}" ref="playlist">
-                  <div class="video-playlist-items" v-for="(video, i) in data.items">
-                    <div class="video-playlist-panel-renderer">
-                      <span v-if="index === i" ref="currentPlay" class="index">▶</span>
-                      <span v-else class="index"></span>
-                      <div class="video-playlist-thumbnail">
-                        <nuxt-link :to="'/videos/' + video.contentDetails.videoId + '/?list=' + $route.query.list + '&index=' + ++i" >
-                          <img width="100" :src="'https://i.ytimg.com/vi/'+video.contentDetails.videoId+'/mqdefault.jpg'" alt="" class="video-img">
-                        </nuxt-link>
-                      </div>
-                      <div class="video-playlist-meta">
-                        <nuxt-link :to="'/videos/' + video.contentDetails.videoId + '/?list=' + $route.query.list + '&index=' + i" >
-                          <h3 class="video-title">{{video.snippet.title | subStrVideoTitle}}
-                          </h3>
-                        </nuxt-link>
+                  <div v-for="(video, i) in data.items">
+                    <div class="video-playlist-items">
+                      <div class="video-playlist-panel-renderer">
+                        <span v-if="index === i" ref="currentPlay" class="index">▶</span>
+                        <span v-else class="index"></span>
+                        <div class="video-playlist-thumbnail">
+                          <nuxt-link :to="'/videos/' + video.contentDetails.videoId + '/?list=' + $route.query.list + '&index=' + ++i" >
+                            <img width="100" :src="'https://i.ytimg.com/vi/'+video.contentDetails.videoId+'/mqdefault.jpg'" alt="" class="video-img">
+                          </nuxt-link>
+                        </div>
+                        <div class="video-playlist-meta">
+                          <nuxt-link :to="'/videos/' + video.contentDetails.videoId + '/?list=' + $route.query.list + '&index=' + i" >
+                            <h3 class="video-title">{{video.snippet.title | subStrVideoTitle}}
+                            </h3>
+                          </nuxt-link>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -175,7 +177,6 @@
           maxAge: 60 * 60 * 24 * 7
         });
       }
-      console.log(await $axios.$get('https://www.youtube.com/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ?pbj=1'));
       return {
         name: params.id,
         index: route.query.index ? route.query.index - 1 : 0,

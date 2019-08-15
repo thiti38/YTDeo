@@ -55,19 +55,50 @@ export default {
   ],
 
 
-  sitemap: {
-    hostname: 'http://www.ytdeo.com',
-    exclude: ['/Service'],
-    gzip: true,
-    defaults: {
-      changefreq: 'hourly',
-      priority: 0.80,
-      lastmod: new Date()
+  sitemap: [
+    {
+      path: '/sitemap.xml',
+      hostname: 'http://www.ytdeo.com',
+      exclude: ['/Service'],
+      gzip: true,
+      defaults: {
+        changefreq: 'hourly',
+        priority: 0.80,
+        lastmod: new Date()
+      },
+      routes () {
+        return axios.get('http://34.67.204.12/videos/id/all/?pageToken=1').then(res => res.data.map(id => '/videos/' + id));
+      },
     },
-    routes () {
-      return axios.get('http://34.67.204.12/videos/id/all').then(res => res.data.map(id => '/videos/' + id));
+    {
+      path: '/sitemap2.xml',
+      hostname: 'http://www.ytdeo.com',
+      exclude: ['/**'],
+      gzip: true,
+      defaults: {
+        changefreq: 'hourly',
+        priority: 0.80,
+        lastmod: new Date()
+      },
+      routes () {
+        return axios.get('http://34.67.204.12/videos/id/all/?pageToken=2').then(res => res.data.map(id => '/videos/' + id));
+      },
     },
-  },
+    {
+      path: '/sitemap3.xml',
+      hostname: 'http://www.ytdeo.com',
+      exclude: ['/**'],
+      gzip: true,
+      defaults: {
+        changefreq: 'hourly',
+        priority: 0.80,
+        lastmod: new Date()
+      },
+      routes () {
+        return axios.get('http://34.67.204.12/videos/id/all/?pageToken=3').then(res => res.data.map(id => '/videos/' + id));
+      },
+    },
+  ],
 
   /*
   ** Build configuration

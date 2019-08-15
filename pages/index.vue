@@ -105,8 +105,8 @@ export default {
         return data["id"] === this.countryCode
       });
     });
-    this.$axios.$get("https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=UC-9-kyTW8ZkZNDHQJ6FgpwQ&" +
-            "maxResults=5&q=" + this.glList.snippet.name + "&type=playlist&regionCode="+ this.countryCode +"&key=AIzaSyBxorfVel1-EbTxWjbAZooJvrPeMFotgTA").then(res => {
+    this.$axios.$get(api_url + "search?part=snippet&channelId=UC-9-kyTW8ZkZNDHQJ6FgpwQ&" +
+            "maxResults=5&q=" + this.glList.snippet.name + "&type=playlist&regionCode="+ this.countryCode).then(res => {
               this.playlist = res;
     })
   },
