@@ -105,7 +105,7 @@ export default {
         return data["id"] === this.countryCode
       });
     });
-    this.$axios.$get(api_url + "search?part=snippet&channelId=UC-9-kyTW8ZkZNDHQJ6FgpwQ&" +
+    this.$axios.$get("/api/search/list/?part=snippet&channelId=UC-9-kyTW8ZkZNDHQJ6FgpwQ&" +
             "maxResults=5&q=" + this.glList.snippet.name + "&type=playlist&regionCode="+ this.countryCode).then(res => {
               this.playlist = res;
     })
