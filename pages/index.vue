@@ -199,12 +199,12 @@ export default {
     flex-wrap: wrap;
     margin-bottom: 24px;
   }
-  .video-img-shadow {
-    width: 100%;
-  }
   @media only screen and (max-width: 600px) {
     .video-loading-desktop{
       display: none;
+    }
+    .video-img-shadow {
+      width: 100%;
     }
     .video-grid-subheader {
       padding: 12px 0;
@@ -242,6 +242,10 @@ export default {
   @media only screen and (min-width: 600px) {
     .video-loading-mobile {
       display: none;
+    }
+    .video-img-shadow {
+      width: 100%;
+      border-radius: 8px;
     }
     .video-shelf {
       padding-top: 24px;

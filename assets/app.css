@@ -133,6 +133,7 @@ a {
 }
 .video-img {
   display: block;
+  border-radius: 4px;
 }
 .video-thumbnail-relate {
   margin-right: 8px;
@@ -195,6 +196,21 @@ a {
   }
   .video-metadata {
     padding-right: 12px;
+  }
+  .video-search-result {
+    margin: 0 !important;
+    position: fixed;
+    width: 100%;
+    right: 0;
+    height: 100%;
+    background-color: #181818 !important;
+  }
+  .video-search-result-text div {
+    padding: 8px 12px !important;
+    color: #fff !important;
+  }
+  .video-search-result-text div:hover{
+    background-color: #080808 !important;
   }
 }
 @media only screen and (max-width: 999px) and (min-width: 600px) {

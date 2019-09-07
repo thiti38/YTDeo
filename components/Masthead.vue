@@ -112,7 +112,8 @@
         this.$router.push('/');
       },
       handleSearch () {
-        this.$axios.$get("http://34.67.204.12/search?q=" + this.search_query + "&gl=" +
+        console.log(encodeURIComponent(this.search_query));
+        this.$axios.$get("http://34.67.204.12/search?q=" + encodeURIComponent(this.search_query) + "&gl=" +
         this.$cookies.get('gl')).then(res => {
           this.search_result = res[1];
         });

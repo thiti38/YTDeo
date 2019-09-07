@@ -141,21 +141,24 @@
     }
 </script>
 
-<style>
+<style scoped>
   .video-dismissable {
     display: flex;
     position: relative;
   }
   .video-img-shadow {
     display: block;
-    width: 100%;
   }
   @media only screen and (max-width: 600px) {
     .video-title {
       font-size: 14px;
     }
     .video-search {
-      padding: 8px 12px;
+      padding: 12px 24px;
+    }
+    .video-img-shadow {
+      width: 100%;
+      border-radius: 4px;
     }
     .video-item-section {
       margin-top: 8px;

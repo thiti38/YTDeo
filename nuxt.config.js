@@ -98,6 +98,48 @@ export default {
         return axios.get('http://34.67.204.12/videos/id/all/?pageToken=3').then(res => res.data.map(id => '/videos/' + id));
       },
     },
+    {
+      path: '/sitemap4.xml',
+      hostname: 'http://www.ytdeo.com',
+      exclude: ['/**'],
+      gzip: true,
+      defaults: {
+        changefreq: 'hourly',
+        priority: 0.80,
+        lastmod: new Date()
+      },
+      routes () {
+        return axios.get('http://34.67.204.12/videos/id/all/?pageToken=4').then(res => res.data.map(id => '/videos/' + id));
+      },
+    },
+    {
+      path: '/sitemap5.xml',
+      hostname: 'http://www.ytdeo.com',
+      exclude: ['/**'],
+      gzip: true,
+      defaults: {
+        changefreq: 'hourly',
+        priority: 0.80,
+        lastmod: new Date()
+      },
+      routes () {
+        return axios.get('http://34.67.204.12/videos/id/all/?pageToken=5').then(res => res.data.map(id => '/videos/' + id));
+      },
+    },
+    {
+      path: '/sitemap6.xml',
+      hostname: 'http://www.ytdeo.com',
+      exclude: ['/**'],
+      gzip: true,
+      defaults: {
+        changefreq: 'hourly',
+        priority: 0.80,
+        lastmod: new Date()
+      },
+      routes () {
+        return axios.get('http://34.67.204.12/videos/id/all/?pageToken=6').then(res => res.data.map(id => '/videos/' + id));
+      },
+    },
   ],
 
   /*
